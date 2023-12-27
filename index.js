@@ -20,7 +20,7 @@ app.get('/users', (req, res) => {
 app.get('/users/:id', (req, res) => {
     const data = JSON.parse(fs.readFileSync(pathToUsersFile, 'utf-8'));
 
-    const user = data.find((user) => user.id === +req.params.id);
+    const user = data.find((user) => user.id === req.params.id);
     if (user) {
         res.send({ user });
     } else {
@@ -30,7 +30,7 @@ app.get('/users/:id', (req, res) => {
 });
 app.post('/users', checkBody(userScheme), (req, res) => {
     const data = JSON.parse(fs.readFileSync(pathToUsersFile, 'utf-8'));
-    let uniqueId = uniqid();
+    uniqueId = uniqid();
 
     data.push({
         id: uniqueId,
@@ -62,7 +62,7 @@ app.put('/users/:id', checkBody(userScheme), (req, res) => {
 app.delete('/users/:id', (req, res) => {
     const data = JSON.parse(fs.readFileSync(pathToUsersFile, 'utf-8'));
 
-    const user = data.find((user) => user.id === +req.params.id);
+    const user = data.find((user) => user.id === req.params.id);
     if (user) {
         const userIndex = data.indexOf(user);
         data.splice(userIndex, 1);
